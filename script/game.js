@@ -2,6 +2,10 @@
  * Created by Administrator on 16/05/2016.
  */
 var context;
+var wallBricks= new Array();
+var wallSteel=  new Array();
+var wallWater= new Array();
+var Trees=new Array();
 window.onload=function() {
     var canvas = document.createElement("canvas");
     context = canvas.getContext("2d");
@@ -11,13 +15,15 @@ window.onload=function() {
     document.body.appendChild(canvas);
     gameStart();
     setInterval(gameLoop, 17);
+
 };
 
 var play;
-var playBullet;
+//var bulletArray=new Array();
 function  gameUpdate() {
     play.update();
-    playBullet.update();
+    //for(var i = 0;i < bulletArray.length;i++)bulletArray[i].update();
+    play.BulletandBrick();
 }
 
 var gameLoop = function (){
@@ -28,17 +34,53 @@ var gameLoop = function (){
 
 function gameStart() {
     play=new Tank(100,100);
-    playBullet=new Bullet(0,0,1);
+
 
 };
+var mapWidth=40;
+var mapHeight=40;
 
+
+for(var i =0; i<mapHeight; i++){
+    for(var j=0; j<mapHeight; j++){
+        if (map[i * mapWidth + j] === 1){
+          var wallbrick= new WallBricks(j,i);
+          wallBricks.push(wallbrick);
+       }
+        if (map[i * mapWidth + j] === 2){
+            var wall = new WallSteel(j,i);
+           wallSteel.push(wall);
+       }
+       if (map[i * mapWidth + j] === 3){
+            var water = new Water(j,i);
+           wallWater.push(water);
+       }
+        if(map [i * mapWidth +j] === 4){
+            var tree= new Tree(j,i);
+            Trees.push(tree);
+        }
+    }
+}
 function gameDrawer(context) {
     context.fillStyle = "black";
     context.fillRect(0,0,window.innerWidth,window.innerHeight);
     play.draw(context);
-    playBullet.draw(context);
+    //for(var i=0;i < bulletArray.length;i++)bulletArray[i].draw(context)
+    //wall
+    for(var i =0;  i < wallBricks.length; i++){
+       wallBricks[i].draw(context);
+   }
+    for(var i =0; i < wallSteel.length; i++){
+       wallSteel[i].draw(context);
+    }
+    for(var i =0; i<wallWater.length; i++){
+       wallWater[i].draw(context);
+    }
+    for(var i=0;i<Trees.length;i++){
+        Trees[i].draw(context);
+    }
 
-}
+};
   window.onkeydown=function (e)
   {
     switch (e.keyCode){
@@ -57,10 +99,9 @@ function gameDrawer(context) {
             play.move(1);
             break;
         case 32://space
-
-            playBullet.x=play.x;
-            playBullet.y = play.y;
-            playBullet.move(play.direction);
+            play.shoot();
+            //var bullet = new Bullet(play.x + 12, play.y + 12, play.direction);
+            ///bulletArray.push(bullet);
             break;
     }
 
@@ -75,7 +116,7 @@ window.onkeyup=function (e) {
             break;
         case 83://s
             if(play.speedY > 0){
-                play.speedy = 0;
+                play.speedY = 0;
                 play.sprite = play.spriteDown;
             }
         case 65://a
