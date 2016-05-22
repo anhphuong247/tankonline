@@ -3,21 +3,20 @@
  */
 class Tank {
     constructor(x, y) {
-
         this.x = x;
         this.y = y;
         this.speedX = 0;
         this.speedY = 0;
-        this.sprite = new Image();
-        this.sprite.src = "images/tank_armor_up_c0_t1.png";
-        this.spriteUp = new Image();
-        this.spriteUp.src = "images/tank_armor_up_c0_t1.png";
-        this.spriteDown = new Image();
-        this.spriteDown.src = "images/tank_armor_down_c0_t1.png";
-        this.spriteLeft = new Image();
-        this.spriteLeft.src = "images/tank_armor_left_c0_t1.png";
-        this.spriteRight = new Image();
-        this.spriteRight.src = "images/tank_armor_right_c0_t1.png";
+        this.sprite = new Animation();
+        this.sprite=this.spriteDown;
+        this.spriteUp = new Animation(this.x,this.y,"tank_armor_up_c0_t",2,17);
+
+        this.spriteDown = new Animation(this.x,this.y,"tank_armor_down_c0_t",2,17);
+
+        this.spriteLeft =new Animation(this.x,this.y,"tank_armor_left_c0_t",2,17);
+
+        this.spriteRight =new Animation(this.x,this.y,"tank_armor_right_c0_t",2,17);
+
         this.direction = 1;
         this.bullet=new Array();
         this.oneBullet=1;
@@ -36,6 +35,7 @@ class Tank {
 
     update() {
         var ismove = true;
+
 
         for(var i=0; i< this.bullet.length; i++){
 
@@ -70,6 +70,9 @@ class Tank {
             this.x += this.speedX;
             this.y += this.speedY;
         }
+        if (this.speedX + this.speedY != 0 ){
+            this.sprite.update(this.x, this.y);
+        }
     }
 
     BulletandBrick() {
@@ -97,14 +100,15 @@ class Tank {
                 }
             }
         }
+
     }
 
     draw(context) {
-        context.drawImage(this.sprite, this.x, this.y);
+         this.sprite.draw(context);
 
-            for (var i = 0; i < this.bullet.length; i++) {
+        for (var i = 0; i < this.bullet.length; i++) {
 
-                this.bullet[i].draw(context);
+            this.bullet[i].draw(context);
 
         }
 

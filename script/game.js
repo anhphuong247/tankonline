@@ -1,11 +1,10 @@
-/**
- * Created by Administrator on 16/05/2016.
- */
+
 var context;
 var wallBricks= new Array();
 var wallSteel=  new Array();
 var wallWater= new Array();
 var Trees=new Array();
+var play;
 window.onload=function() {
     var canvas = document.createElement("canvas");
     context = canvas.getContext("2d");
@@ -18,12 +17,15 @@ window.onload=function() {
 
 };
 
-var play;
+
 //var bulletArray=new Array();
 function  gameUpdate() {
     play.update();
     //for(var i = 0;i < bulletArray.length;i++)bulletArray[i].update();
     play.BulletandBrick();
+    for(var i=0;i<wallWater.length;i++){
+        wallWater[i].update();
+    }
 }
 
 var gameLoop = function (){
@@ -65,6 +67,7 @@ function gameDrawer(context) {
     context.fillStyle = "black";
     context.fillRect(0,0,window.innerWidth,window.innerHeight);
     play.draw(context);
+
     //for(var i=0;i < bulletArray.length;i++)bulletArray[i].draw(context)
     //wall
     for(var i =0;  i < wallBricks.length; i++){
@@ -74,8 +77,10 @@ function gameDrawer(context) {
        wallSteel[i].draw(context);
     }
     for(var i =0; i<wallWater.length; i++){
-       wallWater[i].draw(context);
+        wallWater[i].draw(context);
+
     }
+   
     for(var i=0;i<Trees.length;i++){
         Trees[i].draw(context);
     }
@@ -100,12 +105,10 @@ function gameDrawer(context) {
             break;
         case 32://space
             play.shoot();
-            //var bullet = new Bullet(play.x + 12, play.y + 12, play.direction);
-            ///bulletArray.push(bullet);
             break;
     }
 
-};
+}
 window.onkeyup=function (e) {
     switch (e.keyCode){
         case 87://w
@@ -136,4 +139,4 @@ window.onkeyup=function (e) {
 
 
     }
-};
+}
