@@ -8,7 +8,7 @@ class Animation{
         this.cout=0;
         this.speed=speed;
         this.sprite = new Array();
-       this.coutFrame=number;
+        this.coutFrame=number;
         this.index = 0;
         for (var i = 1; i <= number; i++) {
             var image = new Image();
@@ -18,22 +18,22 @@ class Animation{
 
         }
     }
-         update(x,y){
-             this.x=x;
-             this.y=y;
-             this.cout++;
-             if(this.cout>=this.speed) {
-                 
-                 this.index++;
-                 this.cout=0;
-                 this.index = this.index % this.coutFrame;
-             }
-                 
+     update(x,y){
+         this.x=x;
+         this.y=y;
+         this.cout++;
+         if(this.cout>=this.speed) {
              
+             this.index++;
+             this.cout=0;
+             this.index = this.index % this.coutFrame;
          }
-        draw(context){
-            context.drawImage(this.sprite[this.index],this.x,this.y);
-        }
-
+             
+         
+     }
+    draw(context){
+        context.drawImage(this.sprite[this.index],this.x,this.y);
     }
+
+}
 

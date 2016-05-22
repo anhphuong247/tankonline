@@ -7,8 +7,6 @@ class Tank {
         this.y = y;
         this.speedX = 0;
         this.speedY = 0;
-        this.sprite = new Animation();
-        this.sprite=this.spriteDown;
         this.spriteUp = new Animation(this.x,this.y,"tank_armor_up_c0_t",2,17);
 
         this.spriteDown = new Animation(this.x,this.y,"tank_armor_down_c0_t",2,17);
@@ -16,6 +14,7 @@ class Tank {
         this.spriteLeft =new Animation(this.x,this.y,"tank_armor_left_c0_t",2,17);
 
         this.spriteRight =new Animation(this.x,this.y,"tank_armor_right_c0_t",2,17);
+        this.sprite = this.spriteDown;
 
         this.direction = 1;
         this.bullet=new Array();
